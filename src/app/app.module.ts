@@ -12,13 +12,16 @@ import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
 import { HeaderComponent } from './header/header.component';
 import {MatToolbarModule} from "@angular/material/toolbar";
+import { PostListComponent } from './posts/post-list/post-list.component';
+import {MatExpansionModule} from "@angular/material/expansion";
 
 
 @NgModule({
   declarations: [
     AppComponent,
     PostCreateComponent,
-    HeaderComponent
+    HeaderComponent,
+    PostListComponent
   ],
   imports: [
     BrowserModule,
@@ -30,6 +33,7 @@ import {MatToolbarModule} from "@angular/material/toolbar";
     MatInputModule,
     MatButtonModule,
     MatToolbarModule,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent]

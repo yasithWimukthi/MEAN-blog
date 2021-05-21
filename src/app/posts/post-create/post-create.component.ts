@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PostCreateComponent implements OnInit {
 
+  newPost = 'NO CONTENT' ;
+  enteredValue = '';
+
   constructor() { }
 
   ngOnInit(): void {
@@ -14,6 +17,6 @@ export class PostCreateComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   onAddPost() {
-
+    this.newPost = this.enteredValue;
   }
 }

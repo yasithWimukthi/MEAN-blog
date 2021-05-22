@@ -1,6 +1,8 @@
-<mat-according>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>Title</mat-expansion-panel-header>
-    <p>Expansion panel</p>
+<mat-accordion multi *ngIf="posts.length>0">
+  <mat-expansion-panel *ngFor="let post of posts">
+    <mat-expansion-panel-header>{{post.title}}</mat-expansion-panel-header>
+    <p>{{post.content}}</p>
   </mat-expansion-panel>
-</mat-according>
+</mat-accordion>
+
+<p *ngIf="posts.length<=0" class="mat-body-1 info-text">No posts added yet.</p>

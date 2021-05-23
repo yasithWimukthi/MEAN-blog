@@ -15,6 +15,7 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import { PostListComponent } from './posts/post-list/post-list.component';
 import { MatExpansionModule} from "@angular/material/expansion";
 import {PostService} from "./posts/posts.service";
+import {HttpClientModule} from "@angular/common/http";
 
 
 @NgModule({
@@ -35,9 +36,11 @@ import {PostService} from "./posts/posts.service";
     MatButtonModule,
     MatToolbarModule,
     //MatAccordion,
-    MatExpansionModule
+    MatExpansionModule,
+    HttpClientModule
   ],
   providers: [PostService],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }

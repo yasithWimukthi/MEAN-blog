@@ -34,11 +34,15 @@ app.post('/api/posts',(req,res,next) => {
     content:req.body.content
   })
   post.save()
-    .then(r => console.log(`Post ${req.body.title} saved`) )
+    .then(createdPost => {
+      res.status(201).json({
+        message:'posts added successfully',
+        postId: createdPost._id
+      })
+    } )
     .catch(err => console.log(`Post ${req.body.title} not saved.\n ${err.toString()}`));
 
   //console.log(post);
-  res.status(201).json({message:'posts added successfully'})
 })
 
 
@@ -54,6 +58,15 @@ app.get('/api/posts',(req,res,next) => {
         message:'posts fetched',
         posts: documents
       });
+    })
+})
+
+app.delete('/api/posts/:id',(req,res,next) =>{
+  //console.log(req.params.id);
+  Post.deleteOne({_id:req.params.id})
+    .then(result =>{
+      console.log(result);
+      res.status(200).json({message:'post deleted.'})
     })
 })
 

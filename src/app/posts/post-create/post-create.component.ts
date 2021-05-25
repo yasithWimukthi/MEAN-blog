@@ -16,7 +16,7 @@ export class PostCreateComponent implements OnInit {
   enteredTitle = '';
   private mode = 'create';
   private postId:string;
-  private post:Post;
+  post:Post;
 
   constructor(public postService:PostService, public route:ActivatedRoute) { }
 
@@ -26,6 +26,8 @@ export class PostCreateComponent implements OnInit {
         this.mode = 'edit';
         this.postId = paramMap.get('postId');
         this.post = this.postService.getPost(this.postId);
+        this.enteredTitle = this.post.title;
+        this.enteredContent = this.post.content;
       }else{
         this.mode = 'create';
         this.postId = null;
@@ -36,7 +38,12 @@ export class PostCreateComponent implements OnInit {
   // tslint:disable-next-line:typedef
   onAddPost(form: NgForm) {
     if(form.invalid) return;
-    this.postService.addPost(form.value.title,form.value.content);
+
+    if(this.mode === 'create'){
+      this.postService.addPost(form.value.title,form.value.content);
+    }else{
+      this.postService.updatePost(this.postId,form.value.title,form.value.content);
+    }
     form.resetForm();
   }
 }

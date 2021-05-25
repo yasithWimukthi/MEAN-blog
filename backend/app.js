@@ -58,7 +58,7 @@ app.put('/api/posts/:id',(req,res,next) => {
     })
 });
 
-
+/** get all posts*/
 app.get('/api/posts',(req,res,next) => {
   // const posts = [
   //   {id:'post-1',title:'first server side post',content:'first server side post content'},
@@ -74,6 +74,19 @@ app.get('/api/posts',(req,res,next) => {
     })
 })
 
+/** get single post*/
+app.get('/api/posts/:id',(req,res,next) =>{
+  Post.findById(req.params.id)
+    .then(post =>{
+      if(post){
+        res.status(200).json(post)
+      }else{
+        res.status(404).json({message: 'No post found'})
+      }
+    })
+});
+
+/** delete single post*/
 app.delete('/api/posts/:id',(req,res,next) =>{
   //console.log(req.params.id);
   Post.deleteOne({_id:req.params.id})

@@ -86,7 +86,7 @@ export class PostService {
       }
     }
 
-    this.http.put('http://localhost:3000/api/posts/' + id, postData)
+    this.http.put<{ message: string, imagePath: string }>('http://localhost:3000/api/posts/' + id, postData)
       .subscribe(response => {
         /** update post array with new updated post*/
         const updatedPosts = [...this.posts];

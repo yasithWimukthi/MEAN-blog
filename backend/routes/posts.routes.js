@@ -81,7 +81,17 @@ router.get('',(req,res,next) => {
   //   {id:'post-1',title:'first server side post',content:'first server side post content'},
   //   {id:'post-2',title:'second server side post',content:'second server side post content'}
   // ]
-  Post.find()
+  const pageSize = +req.query.pagesize;
+  const currentPage = +req.query.page;
+  const postQuery = Post.find();
+
+  if (pageSize && currentPage) {
+    postQuery
+      .skip(pageSize * (currentPage-1))
+      .limit(pageSize)
+  }
+
+  postQuery
     .then(documents => {
       console.log(documents)
       res.status(200).json({

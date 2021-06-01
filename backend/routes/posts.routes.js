@@ -71,7 +71,7 @@ router.put(
   Post.updateOne({_id:req.params.id},post)
     .then(result =>{
       console.log(result);
-      res.status(200).json({message:'post is updated'})
+      res.status(200).json({message:'post is updated',imagePath})
     })
 });
 

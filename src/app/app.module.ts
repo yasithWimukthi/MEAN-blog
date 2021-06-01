@@ -17,6 +17,7 @@ import { MatExpansionModule} from "@angular/material/expansion";
 import {PostService} from "./posts/posts.service";
 import {HttpClientModule} from "@angular/common/http";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatPaginatorModule} from "@angular/material/paginator";
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     //MatAccordion,
     MatExpansionModule,
     MatProgressSpinnerModule,
+    MatPaginatorModule,
     HttpClientModule
   ],
   providers: [PostService],

@@ -18,6 +18,7 @@ import {PostService} from "./posts/posts.service";
 import {HttpClientModule} from "@angular/common/http";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatPaginatorModule} from "@angular/material/paginator";
+import { LoginComponent } from './auth/login/login.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import {MatPaginatorModule} from "@angular/material/paginator";
     AppComponent,
     PostCreateComponent,
     HeaderComponent,
-    PostListComponent
+    PostListComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

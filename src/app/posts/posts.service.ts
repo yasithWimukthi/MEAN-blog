@@ -8,7 +8,7 @@ import {Router} from "@angular/router";
 @Injectable()
 export class PostService {
   private posts: Post[] = [];
-  private postUpdated = new Subject<Post[]>();
+  private postUpdated = new Subject<{posts: Post[], postCount: number}>();
 
   constructor(private http: HttpClient,private router:Router) {
   }
@@ -16,20 +16,27 @@ export class PostService {
   getPosts(postsPerPage: number,currentPage: number) {
     // return [...this.posts];
     const queryParams = `?pagesize=${postsPerPage}&page=${currentPage}`;
-    this.http.get<{ message: string, posts: any }>('http://localhost:3000/api/posts' + queryParams)
+    this.http.get<{ message: string, posts: any, maxPosts:number }>('http://localhost:3000/api/posts' + queryParams)
       .pipe(map(postData => {
-        return postData.posts.map(post => {
-          return {
-            title: post.title,
-            content: post.content,
-            id: post._id,
-            imagePath : null
-          }
-        })
+        return {
+          posts :postData.posts.map(post => {
+            return {
+              title: post.title,
+              content: post.content,
+              id: post._id,
+              imagePath: null
+            }
+          }),
+          maxPosts : postData.maxPosts
+        }
       }))
-      .subscribe((transformedPosts) => {
-        this.posts = transformedPosts;
-        this.postUpdated.next([...this.posts]);
+      .subscribe((transformedPostsData) => {
+        this.posts = transformedPostsData.posts;
+        this.postUpdated.next({
+            posts: [...this.posts],
+            postCount : transformedPostsData.maxPosts
+          }
+        );
       })
   }
 
@@ -43,12 +50,12 @@ export class PostService {
     this.http.post<{ message: string, post: Post }>('http://localhost:3000/api/posts', postData)
       .subscribe(response => {
         //console.log(response.message)
-        const postId = response.post.id;
-        const imagePath = response.post.imagePath;
-        post.id = postId;
-        post.imagePath = imagePath;
-        this.posts.push(post);
-        this.postUpdated.next([...this.posts]);
+        // const postId = response.post.id;
+        // const imagePath = response.post.imagePath;
+        // post.id = postId;
+        // post.imagePath = imagePath;
+        // this.posts.push(post);
+        // this.postUpdated.next([...this.posts]);
         this.router.navigate(["/"]);
       });
 
@@ -59,12 +66,12 @@ export class PostService {
   }
 
   deletePost(postId: string) {
-    this.http.delete('http://localhost:3000/api/posts/' + postId)
-      .subscribe(() => {
-        const updatedPosts = this.posts.filter(post => post.id !== postId);
-        this.posts = updatedPosts;
-        this.postUpdated.next([...this.posts]);
-      })
+    return this.http.delete('http://localhost:3000/api/posts/' + postId)
+      // .subscribe(() => {
+      //   const updatedPosts = this.posts.filter(post => post.id !== postId);
+      //   this.posts = updatedPosts;
+      //   this.postUpdated.next([...this.posts]);
+      // })
   }
 
   updatePost(id: string, title: string, content: string,image: File | string) {
@@ -90,19 +97,19 @@ export class PostService {
     this.http.put<{ message: string, imagePath: string }>('http://localhost:3000/api/posts/' + id, postData)
       .subscribe(response => {
         /** update post array with new updated post*/
-        const updatedPosts = [...this.posts];
-        const oldPostIndex = updatedPosts.findIndex(p => p.id === id);
-
-        const post:Post = {
-          id,
-          title,
-          content,
-          imagePath : response.imagePath
-        };
-
-        updatedPosts[oldPostIndex] = post;
-        this.posts = updatedPosts;
-        this.postUpdated.next([...this.posts]);
+        // const updatedPosts = [...this.posts];
+        // const oldPostIndex = updatedPosts.findIndex(p => p.id === id);
+        //
+        // const post:Post = {
+        //   id,
+        //   title,
+        //   content,
+        //   imagePath : response.imagePath
+        // };
+        //
+        // updatedPosts[oldPostIndex] = post;
+        // this.posts = updatedPosts;
+        // this.postUpdated.next([...this.posts]);
         this.router.navigate(["/"]);
       })
   }

@@ -15,11 +15,12 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import { PostListComponent } from './posts/post-list/post-list.component';
 import { MatExpansionModule} from "@angular/material/expansion";
 import {PostService} from "./posts/posts.service";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
+import {AuthInterceptor} from "./auth/auth-interceptor";
 
 
 @NgModule({
@@ -48,7 +49,10 @@ import { SignupComponent } from './auth/signup/signup.component';
     MatPaginatorModule,
     HttpClientModule
   ],
-  providers: [PostService],
+  providers: [
+    PostService,
+    {provide:HTTP_INTERCEPTORS, useClass:AuthInterceptor,multi:true}
+  ],
   bootstrap: [AppComponent]
 })
 

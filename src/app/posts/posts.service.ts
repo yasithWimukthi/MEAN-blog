@@ -42,6 +42,7 @@ export class PostService {
       })
   }
 
+  /**save post to database*/
   addPost(title: string, content: string,image:File) {
     const post: Post = {id: null, title: title, content: content,imagePath:null,creator:null};
     const postData = new FormData();

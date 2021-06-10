@@ -13,6 +13,7 @@ export class PostService {
   constructor(private http: HttpClient,private router:Router) {
   }
 
+  /**fetch post data*/
   getPosts(postsPerPage: number,currentPage: number) {
     // return [...this.posts];
     const queryParams = `?pagesize=${postsPerPage}&page=${currentPage}`;

@@ -78,6 +78,7 @@ export class PostService {
       // })
   }
 
+  /**update posts*/
   updatePost(id: string, title: string, content: string,image: File | string) {
     //const post: Post = {id, title, content,imagePath:null};
     let postData:FormData | Post;

@@ -53,7 +53,11 @@ router.post(
         }
       })
     } )
-    .catch(err => console.log(`Post ${req.body.title} not saved.\n ${err.toString()}`));
+    .catch(err =>{
+      res.status(500).json({
+        message: 'Creating a post failed.'
+      });
+    } );
 
   //console.log(post);
 })
@@ -84,7 +88,11 @@ router.put(
       }else{
         res.status(401).json({message:'Not authorized.',imagePath})
       }
-
+    })
+    .catch(err => {
+      res.status(500).json({
+        message: 'Post couldn\'t updated.'
+      });
     })
 });
 
@@ -118,6 +126,11 @@ router.get('',(req,res,next) => {
         maxPosts: count
       })
     })
+    .catch(err => {
+      res.status(500).json({
+        message: 'Fetching posts failed.'
+      });
+    })
 })
 
 /** get single post*/
@@ -129,6 +142,11 @@ router.get('/:id',(req,res,next) =>{
       }else{
         res.status(404).json({message: 'No post found'})
       }
+    })
+    .catch(err => {
+      res.status(500).json({
+        message: 'Fetching post failed.'
+      });
     })
 });
 
@@ -143,6 +161,11 @@ router.delete('/:id',checkAuth,(req,res,next) =>{
       }else{
         res.status(401).json({message:'Not authorized.'})
       }
+    })
+    .catch(err => {
+      res.status(500).json({
+        message: 'deleting post failed.'
+      });
     })
 })
 
